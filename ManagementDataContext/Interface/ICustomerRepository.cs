@@ -1,4 +1,5 @@
-﻿using ManagementEntity.Model;
+﻿using ManagementEntity;
+using ManagementEntity.Model;
 
 namespace ManagementDataService
 {
@@ -13,20 +14,20 @@ namespace ManagementDataService
         /// GetAll Database Method.
         /// </summary>
         /// <returns>returns in IEnumerable Customer object.</returns>
-        IEnumerable<Customer> GetAll();
+        DataContextResult GetAll();
 
         /// <summary>
         /// GetById Customer Database Method.
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return single Customer object.</returns>
-        Customer GetById(int id);
+        DataContextResult GetById(int id);
 
         /// <summary>
         /// Add Customer Database Method.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        Task AddAsync(Customer customer);
+        DataContextResult AddAsync(Customer customer);
         #endregion [Database Methods]
     }
     #endregion [ICustomerRepository Interface]

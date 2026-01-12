@@ -1,4 +1,5 @@
-﻿using ManagementEntity.Model;
+﻿using ManagementEntity;
+using ManagementEntity.Model;
 
 namespace ManagementService
 {
@@ -13,20 +14,20 @@ namespace ManagementService
         /// Get All Customers businesss method.
         /// </summary>
         /// <returns>returns in IEnumerable Customer object.</returns>
-        IEnumerable<Customer> GetCustomers();
+        BusinessContextResult GetCustomers();
 
         /// <summary>
         /// Get Customer by Id business method.
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return single Customer object.</returns>
-        Customer GetCustomer(int id);
+        BusinessContextResult GetCustomer(int id);
 
         /// <summary>
         /// Create Customer business method.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        void CreateCustomer(Customer customer);
+        BusinessContextResult CreateCustomer(Customer customer);
         #endregion [Interface Methods]
     }
     #endregion [ICustomerService Interface]

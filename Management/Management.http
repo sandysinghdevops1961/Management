@@ -1,6 +1,6 @@
 @Management_HostAddress = http://localhost:5234
 
-GET {{Management_HostAddress}}/weatherforecast/
+GET {{Management_HostAddress}}/Customer/
 Accept: application/json
 
 ###

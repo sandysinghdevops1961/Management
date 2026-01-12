@@ -1,4 +1,5 @@
 ﻿using ManagementDataService;
+using ManagementEntity;
 using ManagementEntity.Model;
 
 namespace ManagementService
@@ -28,7 +29,7 @@ namespace ManagementService
         /// Create Customer of Business method implentation.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        public void CreateCustomer(Customer customer)
+        public BusinessContextResult CreateCustomer(Customer customer)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace ManagementService
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return Customer object.</returns>
-        public Customer GetCustomer(int id)
+        public BusinessContextResult GetCustomer(int id)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace ManagementService
         /// Get Customers of Business method implentationLogic.
         /// </summary>
         /// <returns>return IEnumerable of Customer object.</returns>
-        public IEnumerable<Customer> GetCustomers()
+        public BusinessContextResult GetCustomers()
         {
             try
             {

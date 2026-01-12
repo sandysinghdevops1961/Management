@@ -1,4 +1,4 @@
-using ManagementDataService;
+﻿using ManagementDataService;
 using ManagementDataService.Repositiory;
 using ManagementService;
 using ManagementUtility;
@@ -6,37 +6,29 @@ using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container
 builder.Services.AddControllers();
 
-//builder.Services.AddSingleton<IDbContext>(
-//    new DBContext(builder.Configuration.GetConnectionString("TrackingConnection")));
+// DB & DI (uncomment when ready)
+builder.Services.AddSingleton<IDbContext>(
+     new DBContext(builder.Configuration.GetConnectionString("TrackingConnection")));
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
-//builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-//builder.Services.AddScoped<ICustomerService, CustomerService>();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle    
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("v1", new OpenApiInfo
-//    {
-//        Title = "My API",
-//        Version = "v1",
-//        Description = "ASP.NET Core 8 Web API with Swagger"
-//    });
-//});
+// ✅ Swagger services
+
 var app = builder.Build();
+app.MapControllers();
 
-// Configure the HTTP request pipeline.
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Customer}/{action=GetCustomer}/{id?}");
+// ✅ Swagger middleware
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-
+// ❗ Optional: Conventional routing (keep only if needed)
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Customer}/{action=GetCustomer}");
 
 app.Run();

@@ -1,47 +1,66 @@
-﻿using ManagementEntity.Model;
+﻿using ManagementEntity;
+using ManagementEntity.Model;
 using ManagementService;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Reflection;
 
 namespace Management.Controllers
 {
-    [Route("Customer")]
     [ApiController]
+    [Route("[controller]")]
+    
     public class CustomerController : ControllerBase
     {
-        //#region [Private Members]
-        ///// <summary>
-        ///// Customer Service instance of ICustomerService.
-        ///// </summary>
-        //private readonly ICustomerService _customerService;
+        #region [Private Members]
+        /// <summary>
+        /// Customer Service instance of ICustomerService.
+        /// </summary>
+        private readonly ICustomerService _customerService;
 
-        //#endregion [Private Members]
+        #endregion [Private Members]
 
         #region [Constructor]
-        ///// <summary>
-        ///// Constructor of CustomerController.
-        ///// </summary>
-        ///// <param name="customerService"></param>
-        //public CustomerController(ICustomerService customerService)
-        //{
-        //    _customerService = customerService;
-        //}
+        /// <summary>
+        /// Constructor of CustomerController.
+        /// </summary>
+        /// <param name="customerService"></param>
+        public CustomerController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
         #endregion [Constructor]
 
-        #region [Get Customer]
-        [HttpGet]
-        public string GetCustomer()
-        {
-            return "";
-        }
-        #endregion [Create Customer]
-
         #region [Create Customer]
+        /// <summary>
+        /// Create Customer.
+        /// </summary>
+        /// <param name="customer"></param>
         [HttpPost]
-        public void CreateCustomer([FromBody] Customer customer)
+        [ValidateAntiForgeryToken()]
+        public APIResult CreateCustomer([FromBody] Customer customer)
         {
-            //_customerService.CreateCustomer(customer);
+            APIResult result = new APIResult();
+            try
+            {
+                result.APIRequest = customer;
+                if (ModelState.IsValid)
+                {
+                    _customerService.CreateCustomer(customer);
+                }
+                else
+                {
+                    result.MessageResult = new ResultSet();
+                    result.MessageResult.ErrorMessage = "ModelState is not valid.";
+                    result.MessageResult.ResponseIsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.MessageResult = new ResultSet();
+                result.MessageResult.ErrorMessage=ex.Message;
+                result.MessageResult.ResponseIsSuccess = false;
+            }
+            return result;
         }
         #endregion [Create Customer]
     }

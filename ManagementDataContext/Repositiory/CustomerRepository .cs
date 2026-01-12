@@ -1,8 +1,9 @@
 ﻿using Dapper;
+using ManagementEntity;
 using ManagementEntity.Model;
 using ManagementUtility;
 
-namespace ManagementDataService.Repositiory
+namespace ManagementDataService
 {
     #region [CustomerRepository DataContext Implementation]
 
@@ -31,7 +32,7 @@ namespace ManagementDataService.Repositiory
         /// Add Customer Database Method Implementation.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        public async Task AddAsync(Customer customer)
+        public async DataContextResult AddAsync(Customer customer)
         {
             try
             {
@@ -50,7 +51,7 @@ namespace ManagementDataService.Repositiory
         /// GetAll Customer Database Method Implementation.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Customer> GetAll()
+        public DataContextResult GetAll()
         {
             try
             {
@@ -68,7 +69,7 @@ namespace ManagementDataService.Repositiory
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Customer GetById(int id)
+        public DataContextResult GetById(int id)
         {
             try
             {
