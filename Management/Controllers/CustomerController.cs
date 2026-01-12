@@ -1,43 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ManagementEntity.Model;
+using ManagementService;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Management.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Customer")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        // GET: api/<CustomerController>
+        //#region [Private Members]
+        ///// <summary>
+        ///// Customer Service instance of ICustomerService.
+        ///// </summary>
+        //private readonly ICustomerService _customerService;
+
+        //#endregion [Private Members]
+
+        #region [Constructor]
+        ///// <summary>
+        ///// Constructor of CustomerController.
+        ///// </summary>
+        ///// <param name="customerService"></param>
+        //public CustomerController(ICustomerService customerService)
+        //{
+        //    _customerService = customerService;
+        //}
+        #endregion [Constructor]
+
+        #region [Get Customer]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string GetCustomer()
         {
-            return new string[] { "value1", "value2" };
+            return "";
         }
+        #endregion [Create Customer]
 
-        // GET api/<CustomerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<CustomerController>
+        #region [Create Customer]
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void CreateCustomer([FromBody] Customer customer)
         {
+            //_customerService.CreateCustomer(customer);
         }
-
-        // PUT api/<CustomerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<CustomerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        #endregion [Create Customer]
     }
 }

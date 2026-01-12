@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ManagementService\ManagementService.csproj" />
+    <ProjectReference Include="..\ManagementUtility\ManagementUtility.csproj" />
+    <ProjectReference Include="..\ManagemntEntity\ManagementEntity.csproj" />
+  </ItemGroup>
+
 </Project>

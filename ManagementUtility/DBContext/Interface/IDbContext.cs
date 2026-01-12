@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace ManagementDataContext
+namespace ManagementUtility
 {
     public interface IDbContext
     {

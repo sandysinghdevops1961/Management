@@ -26,7 +26,7 @@ namespace ManagementDataService
         /// Add Customer Database Method.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        void Add(Customer customer);
+        Task AddAsync(Customer customer);
         #endregion [Database Methods]
     }
     #endregion [ICustomerRepository Interface]

@@ -1,4 +1,5 @@
-﻿using ManagementEntity.Model;
+﻿using ManagementDataService;
+using ManagementEntity.Model;
 
 namespace ManagementService
 {
@@ -8,13 +9,17 @@ namespace ManagementService
     /// </summary>
     public class CustomerService : ICustomerService
     {
+        #region [Private Members]
+        private readonly ICustomerRepository _customerRepo;
+        #endregion [Private Members]
+
         #region [Constructor]
         /// <summary>
         /// Constructor of CustomerService Business Service.
         /// </summary>
-        public CustomerService()
+        public CustomerService(ICustomerRepository customerRepo)
         {
-            // to do implement
+            _customerRepo = customerRepo;
         }
         #endregion [Constructor]
 
@@ -27,7 +32,7 @@ namespace ManagementService
         {
             try
             {
-
+                _customerRepo.AddAsync(customer);
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
-﻿using ManagementEntity.Model;
-using System.Net.Http.Headers;
+﻿using Dapper;
+using ManagementEntity.Model;
+using ManagementUtility;
 
 namespace ManagementDataService.Repositiory
 {
@@ -10,13 +11,17 @@ namespace ManagementDataService.Repositiory
     /// </summary>
     public class CustomerRepository : ICustomerRepository
     {
+        #region [Private Members]
+        private readonly IDbContext dbContext;
+        #endregion [Private Members]
+
         #region [Constructor]
         /// <summary>
         /// Constructor of CustomerRepository.
         /// </summary>
-        public CustomerRepository()
+        public CustomerRepository(IDbContext _dbContext)
         {
-            // to do implement
+            dbContext = _dbContext;
         }
         #endregion [Constructor]
 
@@ -26,11 +31,14 @@ namespace ManagementDataService.Repositiory
         /// Add Customer Database Method Implementation.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        public void Add(Customer customer)
+        public async Task AddAsync(Customer customer)
         {
             try
             {
-
+                using (var connection = dbContext.CreateConnection())
+                {
+                    await connection.ExecuteAsync("",customer,commandType:System.Data.CommandType.StoredProcedure);
+                }
             }
             catch (Exception ex)
             {
