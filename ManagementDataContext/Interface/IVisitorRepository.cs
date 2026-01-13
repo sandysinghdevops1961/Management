@@ -1,34 +1,34 @@
 ﻿using ManagementEntity;
 using ManagementEntity.Model;
 
-namespace ManagementDataService
+namespace ManagementDataContext
 {
-    #region [ICustomerRepository Interface]
+    #region [IVisitorRepository  Interface]
     /// <summary>
-    /// ICustomerRepository Interface
+    /// VisitorRepository  Interface
     /// </summary>
-    public interface ICustomerRepository
+    public interface IVisitorRepository
     {
         #region [Database Methods]
         /// <summary>
         /// GetAll Database Method.
         /// </summary>
         /// <returns>returns in IEnumerable Customer object.</returns>
-        DataContextResult GetAll();
+        DatabaseResult GetAll();
 
         /// <summary>
         /// GetById Customer Database Method.
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return single Customer object.</returns>
-        DataContextResult GetById(int id);
+        DatabaseResult GetById(int id);
 
         /// <summary>
         /// Add Customer Database Method.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        DataContextResult AddAsync(Customer customer);
+        DatabaseResult Add(Visitor customer);
         #endregion [Database Methods]
     }
-    #endregion [ICustomerRepository Interface]
+    #endregion [IVisitorRepository  Interface]
 }

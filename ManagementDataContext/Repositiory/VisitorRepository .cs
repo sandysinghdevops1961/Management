@@ -2,27 +2,31 @@
 using ManagementEntity;
 using ManagementEntity.Model;
 using ManagementUtility;
+using System.Data;
+using System.Threading.Tasks;
 
-namespace ManagementDataService
+namespace ManagementDataContext
 {
-    #region [CustomerRepository DataContext Implementation]
+    #region [VisitorRepository DataContext Implementation]
 
     /// <summary>
-    /// CustomerRepository DataContext Implementation.
+    /// VisitorRepository  DataContext Implementation.
     /// </summary>
-    public class CustomerRepository : ICustomerRepository
+    public class VisitorRepository : IVisitorRepository
     {
         #region [Private Members]
         private readonly IDbContext dbContext;
+        private DatabaseResult databaseResult;
         #endregion [Private Members]
 
         #region [Constructor]
         /// <summary>
         /// Constructor of CustomerRepository.
         /// </summary>
-        public CustomerRepository(IDbContext _dbContext)
+        public VisitorRepository(IDbContext _dbContext)
         {
             dbContext = _dbContext;
+            databaseResult = new DatabaseResult();  
         }
         #endregion [Constructor]
 
@@ -32,36 +36,41 @@ namespace ManagementDataService
         /// Add Customer Database Method Implementation.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        public async DataContextResult AddAsync(Customer customer)
+        public DatabaseResult Add(Visitor customer)
         {
             try
             {
+                databaseResult.DatabaseRequest = customer;
                 using (var connection = dbContext.CreateConnection())
                 {
-                    await connection.ExecuteAsync("",customer,commandType:System.Data.CommandType.StoredProcedure);
+                  var ContextResponse= connection.ExecuteAsync("sp_customer",customer,commandType:CommandType.StoredProcedure);
+                  databaseResult.DatabaseResponse = ContextResponse;
+                  databaseResult.ResponseIsSuccess = true; // todo implement ternary operator
                 }
             }
             catch (Exception ex)
             {
-                
+                databaseResult.ErrorMessage = ex.Message;
+                databaseResult.ResponseIsSuccess = false;
             }
+            return databaseResult;
         }
 
         /// <summary>
         /// GetAll Customer Database Method Implementation.
         /// </summary>
         /// <returns></returns>
-        public DataContextResult GetAll()
+        public DatabaseResult GetAll()
         {
             try
             {
-
+                // to do implement database logic for all customer.
             }
             catch (Exception)
             {
                 
             }
-            return new List<Customer>();
+            return databaseResult;
         }
 
         /// <summary>
@@ -69,19 +78,19 @@ namespace ManagementDataService
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public DataContextResult GetById(int id)
+        public DatabaseResult GetById(int id)
         {
             try
             {
-
+                // to do implement database logic for get customer by id.
             }
             catch (Exception)
             {
 
             }
-            return new Customer();
+            return databaseResult;
         }
         #endregion [DataContext Methods Implementation]
     }
-    #endregion [CustomerRepository DataContext Implementation]
+    #endregion [VisitorRepository DataContext Implementation]
 }

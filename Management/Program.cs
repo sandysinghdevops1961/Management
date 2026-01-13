@@ -1,8 +1,6 @@
-﻿using ManagementDataService;
-using ManagementDataService.Repositiory;
+﻿using ManagementDataContext;
 using ManagementService;
 using ManagementUtility;
-using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +10,8 @@ builder.Services.AddControllers();
 // DB & DI (uncomment when ready)
 builder.Services.AddSingleton<IDbContext>(
      new DBContext(builder.Configuration.GetConnectionString("TrackingConnection")));
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
+builder.Services.AddScoped<IVisitorService, VisitiorService>();
 
 // ✅ Swagger services
 

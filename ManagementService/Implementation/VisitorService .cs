@@ -1,4 +1,4 @@
-﻿using ManagementDataService;
+﻿using ManagementDataContext;
 using ManagementEntity;
 using ManagementEntity.Model;
 
@@ -8,19 +8,21 @@ namespace ManagementService
     /// <summary>
     /// CustomerService Business Service Implementation.
     /// </summary>
-    public class CustomerService : ICustomerService
+    public class VisitiorService : IVisitorService
     {
         #region [Private Members]
-        private readonly ICustomerRepository _customerRepo;
+        private readonly IVisitorRepository _customerRepo;
+        private BusinessResult businessResult;
         #endregion [Private Members]
 
         #region [Constructor]
         /// <summary>
-        /// Constructor of CustomerService Business Service.
+        /// Constructor of VisitiorService Business Service.
         /// </summary>
-        public CustomerService(ICustomerRepository customerRepo)
+        public VisitiorService(IVisitorRepository customerRepo)
         {
             _customerRepo = customerRepo;
+            businessResult = new BusinessResult();
         }
         #endregion [Constructor]
 
@@ -29,16 +31,18 @@ namespace ManagementService
         /// Create Customer of Business method implentation.
         /// </summary>
         /// <param name="customer">pass customer as Customer object.</param>
-        public BusinessContextResult CreateCustomer(Customer customer)
+        public BusinessResult CreateVisitior(Visitor customer)
         {
             try
             {
-                _customerRepo.AddAsync(customer);
+                businessResult.BusinessRequest = customer;
+                _customerRepo.Add(customer);
             }
             catch (Exception ex)
             {
 
             }
+            return businessResult;
         }
 
         /// <summary>
@@ -46,7 +50,7 @@ namespace ManagementService
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return Customer object.</returns>
-        public BusinessContextResult GetCustomer(int id)
+        public BusinessResult GetCustomer(int id)
         {
             try
             {
@@ -57,14 +61,14 @@ namespace ManagementService
 
             }
 
-            return new Customer();
+            return new BusinessResult();
         }
 
         /// <summary>
         /// Get Customers of Business method implentationLogic.
         /// </summary>
         /// <returns>return IEnumerable of Customer object.</returns>
-        public BusinessContextResult GetCustomers()
+        public BusinessResult GetCustomers()
         {
             try
             {
@@ -74,7 +78,7 @@ namespace ManagementService
             {
 
             }
-            return new List<Customer>();
+            return new BusinessResult();
         }
         #endregion [Business Logic Implementation]
     }

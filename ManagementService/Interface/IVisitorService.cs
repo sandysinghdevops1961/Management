@@ -3,32 +3,32 @@ using ManagementEntity.Model;
 
 namespace ManagementService
 {
-    #region [ICustomerService Interface]
+    #region [ICustomerVisitiorService Interface]
     /// <summary>
-    /// ICustomerService Business Service Interface.
+    /// IVisitiorService Business Service Interface.
     /// </summary>
-    public interface ICustomerService
+    public interface IVisitorService
     {
         #region [Interface Methods]
         /// <summary>
-        /// Get All Customers businesss method.
+        /// Get All Visitior businesss method.
         /// </summary>
         /// <returns>returns in IEnumerable Customer object.</returns>
-        BusinessContextResult GetCustomers();
+        BusinessResult GetCustomers();
 
         /// <summary>
         /// Get Customer by Id business method.
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return single Customer object.</returns>
-        BusinessContextResult GetCustomer(int id);
+        BusinessResult GetCustomer(int id);
 
         /// <summary>
-        /// Create Customer business method.
+        /// Create visitior business method.
         /// </summary>
-        /// <param name="customer">pass customer as Customer object.</param>
-        BusinessContextResult CreateCustomer(Customer customer);
+        /// <param name="visitior">pass visitior as Visitor object.</param>
+        BusinessResult CreateVisitior(Visitor visitior);
         #endregion [Interface Methods]
     }
-    #endregion [ICustomerService Interface]
+    #endregion [IVisitiorService Interface]
 }

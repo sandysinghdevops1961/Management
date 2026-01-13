@@ -9,13 +9,13 @@ namespace Management.Controllers
     [ApiController]
     [Route("[controller]")]
     
-    public class CustomerController : ControllerBase
+    public class VisitorController : ControllerBase
     {
         #region [Private Members]
         /// <summary>
         /// Customer Service instance of ICustomerService.
         /// </summary>
-        private readonly ICustomerService _customerService;
+        private readonly IVisitorService _customerService;
 
         #endregion [Private Members]
 
@@ -24,44 +24,44 @@ namespace Management.Controllers
         /// Constructor of CustomerController.
         /// </summary>
         /// <param name="customerService"></param>
-        public CustomerController(ICustomerService customerService)
+        public VisitorController(IVisitorService customerService)
         {
             _customerService = customerService;
         }
         #endregion [Constructor]
 
-        #region [Create Customer]
+        #region [Create Visitior]
         /// <summary>
-        /// Create Customer.
+        /// Create Visitior.
         /// </summary>
-        /// <param name="customer"></param>
+        /// <param name="visitior"></param>
         [HttpPost]
         [ValidateAntiForgeryToken()]
-        public APIResult CreateCustomer([FromBody] Customer customer)
+        public APIResult CreateVisitior([FromBody] Visitor visitior)
         {
             APIResult result = new APIResult();
+            result.MessageResult = new ResultSet();
             try
             {
-                result.APIRequest = customer;
+                result.APIRequest = visitior;
                 if (ModelState.IsValid)
                 {
-                    _customerService.CreateCustomer(customer);
+                    _customerService.CreateVisitior(visitior);
+                    result.MessageResult.ResponseIsSuccess = true;
                 }
-                else
+                else if(!ModelState.IsValid)
                 {
-                    result.MessageResult = new ResultSet();
-                    result.MessageResult.ErrorMessage = "ModelState is not valid.";
+                    result.MessageResult.ErrorMessage = ErrorMessage.ValidationError;
                     result.MessageResult.ResponseIsSuccess = false;
                 }
             }
             catch (Exception ex)
             {
-                result.MessageResult = new ResultSet();
                 result.MessageResult.ErrorMessage=ex.Message;
                 result.MessageResult.ResponseIsSuccess = false;
             }
             return result;
         }
-        #endregion [Create Customer]
+        #endregion [Create Visitior]
     }
 }
