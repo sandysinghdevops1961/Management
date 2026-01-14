@@ -13,21 +13,21 @@ namespace ManagementDataContext
         /// <summary>
         /// GetAll Database Method.
         /// </summary>
-        /// <returns>returns in IEnumerable Customer object.</returns>
-        DatabaseResult GetAll();
+        /// <returns>returns in IEnumerable DatabaseResult object.</returns>
+        DatabaseResult GetAllVisitors();
 
         /// <summary>
         /// GetById Customer Database Method.
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return single Customer object.</returns>
-        DatabaseResult GetById(int id);
+        DatabaseResult GetByIdVisitor(int id);
 
         /// <summary>
         /// Add Customer Database Method.
         /// </summary>
-        /// <param name="customer">pass customer as Customer object.</param>
-        DatabaseResult Add(Visitor customer);
+        /// <param name="visitor">pass visitor as Visitor object.</param>
+        DatabaseResult Add(Visitor visitor);
         #endregion [Database Methods]
     }
     #endregion [IVisitorRepository  Interface]

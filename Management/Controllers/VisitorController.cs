@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Management.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Visitor")]
     
     public class VisitorController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace Management.Controllers
         /// <summary>
         /// Customer Service instance of ICustomerService.
         /// </summary>
-        private readonly IVisitorService _customerService;
+        private readonly IVisitorService _visitorService_;
 
         #endregion [Private Members]
 
@@ -24,9 +24,9 @@ namespace Management.Controllers
         /// Constructor of CustomerController.
         /// </summary>
         /// <param name="customerService"></param>
-        public VisitorController(IVisitorService customerService)
+        public VisitorController(IVisitorService visitorService)
         {
-            _customerService = customerService;
+            _visitorService_ = visitorService;
         }
         #endregion [Constructor]
 
@@ -36,8 +36,7 @@ namespace Management.Controllers
         /// </summary>
         /// <param name="visitior"></param>
         [HttpPost]
-        [ValidateAntiForgeryToken()]
-        public APIResult CreateVisitior([FromBody] Visitor visitior)
+        public IActionResult CreateVisitor([FromBody] Visitor visitior)
         {
             APIResult result = new APIResult();
             result.MessageResult = new ResultSet();
@@ -46,8 +45,9 @@ namespace Management.Controllers
                 result.APIRequest = visitior;
                 if (ModelState.IsValid)
                 {
-                    _customerService.CreateVisitior(visitior);
+                    BusinessResult businessResult= _visitorService_.CreateVisitior(visitior);
                     result.MessageResult.ResponseIsSuccess = true;
+                    result.APIResponse = businessResult;
                 }
                 else if(!ModelState.IsValid)
                 {
@@ -60,7 +60,7 @@ namespace Management.Controllers
                 result.MessageResult.ErrorMessage=ex.Message;
                 result.MessageResult.ResponseIsSuccess = false;
             }
-            return result;
+            return Ok(result);
         }
         #endregion [Create Visitior]
     }

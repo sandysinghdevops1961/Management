@@ -4,14 +4,14 @@ using ManagementEntity.Model;
 
 namespace ManagementService
 {
-    #region [CustomerService Business Service Implementation]
+    #region [VisitiorService Business Service Implementation]
     /// <summary>
-    /// CustomerService Business Service Implementation.
+    /// VisitiorService Business Service Implementation.
     /// </summary>
     public class VisitiorService : IVisitorService
     {
         #region [Private Members]
-        private readonly IVisitorRepository _customerRepo;
+        private readonly IVisitorRepository _visitorRepo;
         private BusinessResult businessResult;
         #endregion [Private Members]
 
@@ -19,38 +19,40 @@ namespace ManagementService
         /// <summary>
         /// Constructor of VisitiorService Business Service.
         /// </summary>
-        public VisitiorService(IVisitorRepository customerRepo)
+        public VisitiorService(IVisitorRepository visitorRepo)
         {
-            _customerRepo = customerRepo;
+            _visitorRepo = visitorRepo;
             businessResult = new BusinessResult();
         }
         #endregion [Constructor]
 
         #region [Business Service Methods Implementation]
         /// <summary>
-        /// Create Customer of Business method implentation.
+        /// Create Visitor of Business method implentation.
         /// </summary>
-        /// <param name="customer">pass customer as Customer object.</param>
-        public BusinessResult CreateVisitior(Visitor customer)
+        /// <param name="customer">pass visitor as Visitor object.</param>
+        public BusinessResult CreateVisitior(Visitor visitor)
         {
             try
             {
-                businessResult.BusinessRequest = customer;
-                _customerRepo.Add(customer);
+                businessResult.BusinessRequest = visitor;
+                DatabaseResult responseDBContext=_visitorRepo.Add(visitor);
+                businessResult.BusinessResponse = responseDBContext;
             }
             catch (Exception ex)
             {
-
+                businessResult.ErrorCode = ErrorCode.DatabaseError;
+                businessResult.ErrorMessage = ex.Message;
             }
             return businessResult;
         }
 
         /// <summary>
-        /// Get Customer by Id of Business method implentation.
+        /// Get Visitor by Id of Business method implentation.
         /// </summary>
         /// <param name="id">pass id as integer.</param>
-        /// <returns>return Customer object.</returns>
-        public BusinessResult GetCustomer(int id)
+        /// <returns>return Visitor object.</returns>
+        public BusinessResult GetVisitor(int id)
         {
             try
             {
@@ -65,10 +67,10 @@ namespace ManagementService
         }
 
         /// <summary>
-        /// Get Customers of Business method implentationLogic.
+        /// Get Visitors of Business method implentationLogic.
         /// </summary>
-        /// <returns>return IEnumerable of Customer object.</returns>
-        public BusinessResult GetCustomers()
+        /// <returns>return IEnumerable of Visitor object.</returns>
+        public BusinessResult GetVisitors()
         {
             try
             {
@@ -82,5 +84,5 @@ namespace ManagementService
         }
         #endregion [Business Logic Implementation]
     }
-    #endregion [CustomerService Business Service Implementation]
+    #endregion [VisitorService Business Service Implementation]
 }

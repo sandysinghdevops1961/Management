@@ -24,9 +24,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-// ❗ Optional: Conventional routing (keep only if needed)
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Customer}/{action=GetCustomer}");
+
 
 app.Run();

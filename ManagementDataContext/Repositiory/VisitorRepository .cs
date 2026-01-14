@@ -21,7 +21,7 @@ namespace ManagementDataContext
 
         #region [Constructor]
         /// <summary>
-        /// Constructor of CustomerRepository.
+        /// Constructor of VisitorRepository.
         /// </summary>
         public VisitorRepository(IDbContext _dbContext)
         {
@@ -33,19 +33,27 @@ namespace ManagementDataContext
         #region [DataContext Methods Implementation]
 
         /// <summary>
-        /// Add Customer Database Method Implementation.
+        /// Add Visitor Database Method Implementation.
         /// </summary>
-        /// <param name="customer">pass customer as Customer object.</param>
-        public DatabaseResult Add(Visitor customer)
+        /// <param name="visitor">pass visitor as Visitor object.</param>
+        public DatabaseResult Add(Visitor visitor)
         {
             try
             {
-                databaseResult.DatabaseRequest = customer;
+                databaseResult.DatabaseRequest = visitor;
                 using (var connection = dbContext.CreateConnection())
                 {
-                  var ContextResponse= connection.ExecuteAsync("sp_customer",customer,commandType:CommandType.StoredProcedure);
-                  databaseResult.DatabaseResponse = ContextResponse;
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@VisitorName", visitor.VisitorName);
+                    parameters.Add("@VisitorMobileNo", visitor.VisitorMobileNo);
+                    parameters.Add("@VisitorComingFrom", visitor.VisitorComingFrom);
+                    parameters.Add("@WhomToSee", visitor.WhomToSee);
+                    parameters.Add("@Purpose", visitor.Purpose);
+
+                  var ContextResponse= connection.ExecuteAsync("usp_InsertVisitor", parameters, commandType:CommandType.StoredProcedure);
+                  databaseResult.DatabaseResponse = ContextResponse.Result;
                   databaseResult.ResponseIsSuccess = true; // todo implement ternary operator
+                  databaseResult.ErrorMessage=string.Empty;
                 }
             }
             catch (Exception ex)
@@ -57,10 +65,10 @@ namespace ManagementDataContext
         }
 
         /// <summary>
-        /// GetAll Customer Database Method Implementation.
+        /// GetAll Visitor Database Method Implementation.
         /// </summary>
         /// <returns></returns>
-        public DatabaseResult GetAll()
+        public DatabaseResult GetAllVisitors()
         {
             try
             {
@@ -74,11 +82,11 @@ namespace ManagementDataContext
         }
 
         /// <summary>
-        /// GetById Customer Database Method Implementation.
+        /// GetById Visitor Database Method Implementation.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public DatabaseResult GetById(int id)
+        public DatabaseResult GetByIdVisitor(int id)
         {
             try
             {

@@ -5,28 +5,28 @@ namespace ManagementService
 {
     #region [ICustomerVisitiorService Interface]
     /// <summary>
-    /// IVisitiorService Business Service Interface.
+    /// IVisitorService Business Service Interface.
     /// </summary>
     public interface IVisitorService
     {
         #region [Interface Methods]
         /// <summary>
-        /// Get All Visitior businesss method.
+        /// Get All Visitor businesss method.
         /// </summary>
-        /// <returns>returns in IEnumerable Customer object.</returns>
-        BusinessResult GetCustomers();
+        /// <returns>returns in IEnumerable Visitor object.</returns>
+        BusinessResult GetVisitors();
 
         /// <summary>
-        /// Get Customer by Id business method.
+        /// Get Visitor by Id business method.
         /// </summary>
         /// <param name="id">pass id as integer.</param>
-        /// <returns>return single Customer object.</returns>
-        BusinessResult GetCustomer(int id);
+        /// <returns>return single Visitor object.</returns>
+        BusinessResult GetVisitor(int id);
 
         /// <summary>
-        /// Create visitior business method.
+        /// Create Visitor business method.
         /// </summary>
-        /// <param name="visitior">pass visitior as Visitor object.</param>
+        /// <param name="visitior">pass visitor as Visitor object.</param>
         BusinessResult CreateVisitior(Visitor visitior);
         #endregion [Interface Methods]
     }
