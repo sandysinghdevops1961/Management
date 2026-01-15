@@ -3,7 +3,7 @@ using ManagementEntity.Model;
 
 namespace ManagementService
 {
-    #region [ICustomerVisitiorService Interface]
+    #region [IVisitiorService Interface]
     /// <summary>
     /// IVisitorService Business Service Interface.
     /// </summary>
@@ -11,23 +11,23 @@ namespace ManagementService
     {
         #region [Interface Methods]
         /// <summary>
-        /// Get All Visitor businesss method.
+        /// Get All Visitors businesss method.
         /// </summary>
-        /// <returns>returns in IEnumerable Visitor object.</returns>
-        BusinessResult GetVisitors();
+        /// <returns>returns in BusinessResult object.</returns>
+        Task<BusinessResult> GetVisitors();
 
         /// <summary>
         /// Get Visitor by Id business method.
         /// </summary>
-        /// <param name="id">pass id as integer.</param>
+        /// <param name="id">pass visitorId as integer.</param>
         /// <returns>return single Visitor object.</returns>
-        BusinessResult GetVisitor(int id);
+        Task<BusinessResult> GetVisitor(int id);
 
         /// <summary>
         /// Create Visitor business method.
         /// </summary>
         /// <param name="visitior">pass visitor as Visitor object.</param>
-        BusinessResult CreateVisitior(Visitor visitior);
+        Task<BusinessResult> CreateVisitior(Visitor visitior);
         #endregion [Interface Methods]
     }
     #endregion [IVisitiorService Interface]

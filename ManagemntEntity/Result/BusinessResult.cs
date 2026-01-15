@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ManagementEntity
@@ -10,7 +11,7 @@ namespace ManagementEntity
     /// <summary>
     /// Get or set the BusinessResult
     /// </summary>
-    public class BusinessResult : ResultSet
+    public class BusinessResult :ResultSet
     {
         #region [Property]
         /// <summary>
@@ -21,6 +22,7 @@ namespace ManagementEntity
         /// <summary>
         /// Get or set the BusinessResponse property.
         /// </summary>
+        [JsonIgnore]
         public object? BusinessResponse { get; set; }
 
         #endregion [Property]

@@ -14,38 +14,37 @@ namespace ManagementEntity
     public class ResultSet
     {
         #region [Variables]
-
+        /// <summary>
+        /// Declare requestDateTime Variable.
+        /// </summary>
         private DateTime _requestDateTime = DateTime.UtcNow;
+
+        /// <summary>
+        /// Declare responseIsSuccess Variable.
+        /// </summary>
+        private bool? _success = false;
+
         #endregion [Variables]
         #region [Property]
-        /// <summary>
-        /// Set the CurrentRequestDateTime.
-        /// </summary>
-        public DateTime RequestDateTime
-        {
-            get { return _requestDateTime; }
-            set { _requestDateTime = value; }
-        }
-
-        /// <summary>
-        /// Set the CurrentResponseDateTime.
-        /// </summary>
-        public DateTime ResponseDateTime { get; set; }
-
+        
         /// <summary>
         /// Get or set the ResponseIsSuccess property.
         /// </summary>
-        public bool? ResponseIsSuccess { get; set; }
+        public bool? Success
+        {
+            get { return _success; }
+            set { _success = value; }
+        }
 
         /// <summary>
-        /// Get or set the ErrorMessage property.
+        /// Get or set the Message property.
         /// </summary>
-        public string? ErrorMessage { get; set; }
+        public string? Message { get; set; }
 
         /// <summary>
-        /// Get or set the ErrorCode property.
+        /// Get or set the MessageCode property.
         /// </summary>
-        public ErrorCode? ErrorCode { get; set; }
+        public MessageCode MessageCode { get; set; }
 
         /// <summary>
         /// Get or set the MethodName property.
@@ -54,6 +53,6 @@ namespace ManagementEntity
         #endregion [Property]
     }
 
-    
+
     #endregion [Global Message Result Entity]
 }

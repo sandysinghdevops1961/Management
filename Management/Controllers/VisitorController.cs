@@ -13,20 +13,20 @@ namespace Management.Controllers
     {
         #region [Private Members]
         /// <summary>
-        /// Customer Service instance of ICustomerService.
+        /// Visitor Service instance of IVisitorService.
         /// </summary>
-        private readonly IVisitorService _visitorService_;
+        private readonly IVisitorService _visitorService;
 
         #endregion [Private Members]
 
         #region [Constructor]
         /// <summary>
-        /// Constructor of CustomerController.
+        /// Constructor of VisitorController.
         /// </summary>
-        /// <param name="customerService"></param>
+        /// <param name="visitorService"></param>
         public VisitorController(IVisitorService visitorService)
         {
-            _visitorService_ = visitorService;
+            _visitorService = visitorService;
         }
         #endregion [Constructor]
 
@@ -36,29 +36,31 @@ namespace Management.Controllers
         /// </summary>
         /// <param name="visitior"></param>
         [HttpPost]
-        public IActionResult CreateVisitor([FromBody] Visitor visitior)
+        public async Task<IActionResult> CreateVisitor([FromBody] Visitor visitior)
         {
             APIResult result = new APIResult();
-            result.MessageResult = new ResultSet();
             try
             {
                 result.APIRequest = visitior;
                 if (ModelState.IsValid)
                 {
-                    BusinessResult businessResult= _visitorService_.CreateVisitior(visitior);
-                    result.MessageResult.ResponseIsSuccess = true;
-                    result.APIResponse = businessResult;
+                    BusinessResult businessResult=await _visitorService.CreateVisitior(visitior);
+                    result.APIResponse =(ResultSet?) businessResult.BusinessResponse;
                 }
                 else if(!ModelState.IsValid)
                 {
-                    result.MessageResult.ErrorMessage = ErrorMessage.ValidationError;
-                    result.MessageResult.ResponseIsSuccess = false;
+                   result.APIResponse=new ResultSet();
+                   result.APIResponse.Message = Message.ModelValidationError;
+                   result.APIResponse.MessageCode = MessageCode.ModelValidationError;
+                   result.APIResponse.MethodName = MethodBase.GetCurrentMethod()?.Name; 
                 }
             }
             catch (Exception ex)
             {
-                result.MessageResult.ErrorMessage=ex.Message;
-                result.MessageResult.ResponseIsSuccess = false;
+                result.APIResponse = new ResultSet();
+                result.APIResponse.Message=ex.Message;
+                result.APIResponse.MessageCode = MessageCode.APIError;
+                result.APIResponse.Message = MethodBase.GetCurrentMethod()?.Name;
             }
             return Ok(result);
         }

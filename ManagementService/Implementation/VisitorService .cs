@@ -1,6 +1,7 @@
 ﻿using ManagementDataContext;
 using ManagementEntity;
 using ManagementEntity.Model;
+using System.Reflection;
 
 namespace ManagementService
 {
@@ -11,7 +12,14 @@ namespace ManagementService
     public class VisitiorService : IVisitorService
     {
         #region [Private Members]
+        /// <summary>
+        /// Declare IVisitorRepository variable.
+        /// </summary>
         private readonly IVisitorRepository _visitorRepo;
+
+        /// <summary>
+        /// Declare BusinessResult variable.
+        /// </summary>
         private BusinessResult businessResult;
         #endregion [Private Members]
 
@@ -30,19 +38,24 @@ namespace ManagementService
         /// <summary>
         /// Create Visitor of Business method implentation.
         /// </summary>
-        /// <param name="customer">pass visitor as Visitor object.</param>
-        public BusinessResult CreateVisitior(Visitor visitor)
+        /// <param name="visitor">pass visitor as Visitor object.</param>
+        public async Task<BusinessResult> CreateVisitior(Visitor visitor)
         {
             try
             {
                 businessResult.BusinessRequest = visitor;
-                DatabaseResult responseDBContext=_visitorRepo.Add(visitor);
+                DatabaseResult responseDBContext= await _visitorRepo.AddAsync(visitor);
                 businessResult.BusinessResponse = responseDBContext;
+                businessResult.Success = responseDBContext.Success;
+                businessResult.Message = responseDBContext.Message;
+                businessResult.MessageCode = responseDBContext.MessageCode;
+                businessResult.MethodName = MethodBase.GetCurrentMethod()?.Name;
             }
             catch (Exception ex)
             {
-                businessResult.ErrorCode = ErrorCode.DatabaseError;
-                businessResult.ErrorMessage = ex.Message;
+                businessResult.Message = ex.Message;
+                businessResult.MessageCode = MessageCode.RuntimeBusinessException;
+                businessResult.MethodName = MethodBase.GetCurrentMethod()?.Name;
             }
             return businessResult;
         }
@@ -52,7 +65,7 @@ namespace ManagementService
         /// </summary>
         /// <param name="id">pass id as integer.</param>
         /// <returns>return Visitor object.</returns>
-        public BusinessResult GetVisitor(int id)
+        public async Task<BusinessResult> GetVisitor(int id)
         {
             try
             {
@@ -70,7 +83,7 @@ namespace ManagementService
         /// Get Visitors of Business method implentationLogic.
         /// </summary>
         /// <returns>return IEnumerable of Visitor object.</returns>
-        public BusinessResult GetVisitors()
+        public async Task<BusinessResult> GetVisitors()
         {
             try
             {
@@ -78,7 +91,7 @@ namespace ManagementService
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return new BusinessResult();
         }
